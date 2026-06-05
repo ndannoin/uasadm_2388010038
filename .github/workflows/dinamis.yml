@@ -37,5 +37,5 @@ jobs:
           key: ${{ secrets.AWS_PRIVATE_KEY }}
           script: |
             cd /home/ubuntu/uas-2388010038
-            docker compose pull web-dinamis
-            docker compose up -d --no-deps web-dinamis
+            docker compose pull uas-dinamis
+            docker compose up -d --no-deps uas-dinamis

@@ -1,5 +1,5 @@
 <?php
-$host = "mariadb"; // WAJIB memanggil nama service di docker-compose
+$host = "uas-mariadb"; // WAJIB memanggil nama service di docker-compose
 $user = "admin";
 $pass = "admin123";
 $db   = "uasadm_2388010038";
