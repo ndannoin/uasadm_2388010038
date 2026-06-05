@@ -37,10 +37,14 @@ jobs:
           host: ${{ secrets.AWS_HOST }}
           username: ${{ secrets.AWS_USERNAME }}
           key: ${{ secrets.AWS_PRIVATE_KEY }}
+          envs: GITHUB_TOKEN,GITHUB_REPOSITORY
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GITHUB_REPOSITORY: ${{ github.repository }}
           script: |
             set -e
             DEPLOY_DIR="$HOME/uas-2388010038"
-            REPO_URL="https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+            REPO_URL="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 
             # Clone repo jika belum ada
             if [ ! -d "$DEPLOY_DIR/.git" ] || ! git -C "$DEPLOY_DIR" rev-parse --is-inside-work-tree > /dev/null 2>&1; then
