@@ -374,7 +374,19 @@
   </div>
   <div class="footer-right">&copy; <span id="year"></span> · Dibuat dengan ❤️</div>
 </footer>
-
+<!-- INTERACTIVE PROFILE PHOTO CONTAINER -->
+  <div class="hero-photo-wrap">
+    <div class="hero-photo-ring" onclick="triggerProfileUpload()">
+      <div class="hero-photo-inner" id="profilePhotoInner">
+        <!-- Menggunakan gambar gosong sebagai default avatar cerdas -->
+        <img id="profileImg" src="WhatsApp Image 2026-06-06 at 00.33.42.jpeg" alt="Avatar Profil Zaidan" style="display: block; width: 100%; height: 100%; object-fit: cover;">
+        
+        <div class="photo-upload-overlay">Ganti Foto</div>
+      </div>
+    </div>
+    <div class="hero-nim-badge">Mhs. Informatika 6A</div>
+  </div>
+  <input type="file" id="profileInput" accept="image/*" style="display:none" onchange="handleProfileUpload(event)">
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
   const cursor = document.getElementById('cursor'); const ring = document.getElementById('cursorRing');
