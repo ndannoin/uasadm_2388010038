@@ -36,11 +36,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         with:
           host: ${{ secrets.AWS_HOST }}
           username: ${{ secrets.AWS_USERNAME }}
           key: ${{ secrets.AWS_PRIVATE_KEY }}
-          envs: GITHUB_TOKEN,GITHUB_REPOSITORY
+          envs: GITHUB_TOKEN,GITHUB_REPOSITORY,DOCKERHUB_USERNAME
           script: |
             set -e
             DEPLOY_DIR="$HOME/uas-2388010038"
@@ -63,3 +64,5 @@ jobs:
             docker compose pull uas-statis
             docker rm -f uas-statis 2>/dev/null || true
             docker compose up -d --no-deps --force-recreate uas-statis
+            docker compose ps
+            docker port uas-statis 80

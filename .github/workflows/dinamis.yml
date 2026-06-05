@@ -36,11 +36,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         with:
           host: ${{ secrets.AWS_HOST }}
           username: ${{ secrets.AWS_USERNAME }}
           key: ${{ secrets.AWS_PRIVATE_KEY }}
-          envs: GITHUB_TOKEN,GITHUB_REPOSITORY
+          envs: GITHUB_TOKEN,GITHUB_REPOSITORY,DOCKERHUB_USERNAME
           script: |
             set -e
             DEPLOY_DIR="$HOME/uas-2388010038"
@@ -61,5 +62,12 @@ jobs:
 
             # Pull image terbaru dan deploy dinamis + MariaDB (dependency)
             docker compose pull uas-dinamis
-            docker rm -f uas-dinamis 2>/dev/null || true
-            docker compose up -d --force-recreate uas-dinamis
+            docker rm -f uas-dinamis uas-mariadb 2>/dev/null || true
+            docker compose up -d --remove-orphans --force-recreate uas-mariadb uas-dinamis
+
+            docker compose ps
+            if ! docker ps --format '{{.Names}}' | grep -qx 'uas-dinamis'; then
+              docker logs --tail=80 uas-dinamis || true
+              exit 1
+            fi
+            docker port uas-dinamis 80

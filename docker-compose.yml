@@ -1,7 +1,7 @@
 services:
   # Nama service diganti jadi uas-statis agar dibaca oleh GitHub Actions
   uas-statis:
-    image: zaidanaliffirdaus/uas-statis:latest
+    image: ${DOCKERHUB_USERNAME:-zaidanaliffirdaus}/uas-statis:latest
     container_name: uas-statis
     ports:
       - "80:80"
@@ -9,7 +9,7 @@ services:
 
   # Nama service diganti jadi uas-dinamis agar dibaca oleh GitHub Actions
   uas-dinamis:
-    image: zaidanaliffirdaus/uas-dinamis:latest
+    image: ${DOCKERHUB_USERNAME:-zaidanaliffirdaus}/uas-dinamis:latest
     container_name: uas-dinamis
     ports:
       - "3000:80"
