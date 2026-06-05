@@ -37,14 +37,14 @@ jobs:
           username: ${{ secrets.AWS_USERNAME }}
           key: ${{ secrets.AWS_PRIVATE_KEY }}
           script: |
-            cd /home/ubuntu/uas-2388010038
+            cd /home/ubuntu/UASS_2388010038
             # Otomatis pull sesuai branch yang aktif
             git pull origin $(git branch --show-current)
             
             docker compose pull web-dinamis
             docker compose up -d --no-deps web-dinamis
             
-            docker cp /home/ubuntu/uas-2388010038/web-dinamis/index.php uas-dinamis:/var/www/html/index.php
-            docker cp /home/ubuntu/uas-2388010038/web-dinamis/dashboard.php uas-dinamis:/var/www/html/dashboard.php
+            docker cp /home/ubuntu/UASS_2388010038/web-dinamis/index.php uas-dinamis:/var/www/html/index.php
+            docker cp /home/ubuntu/UASS_2388010038/web-dinamis/dashboard.php uas-dinamis:/var/www/html/dashboard.php
             
             docker restart uas-dinamis
