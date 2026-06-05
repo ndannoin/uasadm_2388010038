@@ -20,7 +20,6 @@ if(isset($_POST['login'])){
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -39,28 +38,21 @@ if(isset($_POST['login'])){
             --border: rgba(124, 106, 247, 0.2);
         }
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        *, *::before, *::after { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
 
         body {
             font-family: 'DM Sans', sans-serif;
-            background: var(--bg);
+            background-color: var(--bg);
             color: var(--text);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow: hidden;
             position: relative;
-        }
-
-        /* Background Glow Orb effect */
-        body::before {
-            content: '';
-            position: absolute;
-            width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(124,106,247,0.15) 0%, transparent 70%);
-            top: -100px; right: -100px;
-            pointer-events: none;
         }
 
         .login-container {
@@ -77,7 +69,6 @@ if(isset($_POST['login'])){
             border-radius: 20px;
             padding: 40px 35px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
             position: relative;
         }
 
@@ -107,9 +98,7 @@ if(isset($_POST['login'])){
             text-align: center;
             margin-bottom: 30px;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #fff 0%, var(--text-muted) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ffffff;
         }
 
         .form-group {
