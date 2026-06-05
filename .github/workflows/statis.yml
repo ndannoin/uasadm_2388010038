@@ -36,6 +36,13 @@ jobs:
           username: ${{ secrets.AWS_USERNAME }}
           key: ${{ secrets.AWS_PRIVATE_KEY }}
           script: |
-            cd /home/ubuntu/uas-2388010038
+            # If directory doesn't exist or isn't a valid git repo, clone fresh
+            if [ ! -d "/home/${{ secrets.AWS_USERNAME }}/uas-2388010038/.git" ] || ! git -C /home/${{ secrets.AWS_USERNAME }}/uas-2388010038 rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+              rm -rf /home/${{ secrets.AWS_USERNAME }}/uas-2388010038
+              git clone https://github.com/${{ github.repository }}.git /home/${{ secrets.AWS_USERNAME }}/uas-2388010038
+            fi
+            cd /home/${{ secrets.AWS_USERNAME }}/uas-2388010038
+            git fetch origin main
+            git reset --hard origin/main
             docker compose pull uas-statis
             docker compose up -d --no-deps uas-statis

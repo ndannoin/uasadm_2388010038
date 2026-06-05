@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Nama service diganti jadi uas-statis agar dibaca oleh GitHub Actions
   uas-statis:
