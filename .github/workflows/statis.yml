@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - 'web-statis/**'
+      - 'docker-compose.yml'
+      - '.github/workflows/statis.yml'
 
 jobs:
   deploy:
@@ -29,20 +31,30 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/uas-statis:latest
 
-      - name: Deploy to AWS
+      - name: Deploy to AWS via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.AWS_HOST }}
           username: ${{ secrets.AWS_USERNAME }}
           key: ${{ secrets.AWS_PRIVATE_KEY }}
           script: |
-            # If directory doesn't exist or isn't a valid git repo, clone fresh
-            if [ ! -d "/home/${{ secrets.AWS_USERNAME }}/uas-2388010038/.git" ] || ! git -C /home/${{ secrets.AWS_USERNAME }}/uas-2388010038 rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-              rm -rf /home/${{ secrets.AWS_USERNAME }}/uas-2388010038
-              git clone https://github.com/${{ github.repository }}.git /home/${{ secrets.AWS_USERNAME }}/uas-2388010038
+            set -e
+            DEPLOY_DIR="$HOME/uas-2388010038"
+            REPO_URL="https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+
+            # Clone repo jika belum ada
+            if [ ! -d "$DEPLOY_DIR/.git" ] || ! git -C "$DEPLOY_DIR" rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+              rm -rf "$DEPLOY_DIR"
+              git clone "$REPO_URL" "$DEPLOY_DIR"
             fi
-            cd /home/${{ secrets.AWS_USERNAME }}/uas-2388010038
+
+            cd "$DEPLOY_DIR"
+
+            # Update remote URL dengan token terbaru agar fetch berhasil
+            git remote set-url origin "$REPO_URL"
             git fetch origin main
             git reset --hard origin/main
+
+            # Pull image terbaru dan deploy statis saja
             docker compose pull uas-statis
             docker compose up -d --no-deps uas-statis

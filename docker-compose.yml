@@ -14,10 +14,10 @@ services:
     ports:
       - "3000:80"
     environment:
-      DATABASE_HOST: uas-mariadb # Menunjuk ke container name mariadb
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+      DATABASE_HOST: uas-mariadb
+      MYSQL_DATABASE: uas_zaidan_db
+      MYSQL_USER: zaidan_user
+      MYSQL_PASSWORD: password_zaidan_123
     depends_on:
       uas-mariadb:
         condition: service_healthy
@@ -27,15 +27,15 @@ services:
     image: mariadb:11
     container_name: uas-mariadb
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: root_password_123
+      MYSQL_DATABASE: uas_zaidan_db
+      MYSQL_USER: zaidan_user
+      MYSQL_PASSWORD: password_zaidan_123
     volumes:
       - db_data:/var/lib/mysql
       - ./database/users.sql:/docker-entrypoint-initdb.d/database.sql:ro
     healthcheck:
-      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "${DB_USER}", "-p${DB_PASSWORD}"]
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "zaidan_user", "-ppassword_zaidan_123"]
       interval: 5s
       timeout: 5s
       retries: 5
