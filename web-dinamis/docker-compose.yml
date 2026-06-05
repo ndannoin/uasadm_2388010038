@@ -1,0 +1,38 @@
+services:
+
+  web-dinamis:
+    image: zaidanaliffirdaus/uas-dinamis:latest
+    container_name: uas-dinamis
+
+    ports:
+      - "3000:80"
+
+    environment:
+      DATABASE_HOST: mariadb
+      MYSQL_DATABASE: uasadm_2388010038
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin123
+
+    depends_on:
+      - mariadb
+
+    restart: always
+
+  mariadb:
+    image: mariadb:11
+    container_name: uas-mariadb
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: uasadm_2388010038
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin123
+
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./web-dinamis/database.sql:/docker-entrypoint-initdb.d/database.sql
+
+    restart: always
+
+volumes:
+  db_data:
