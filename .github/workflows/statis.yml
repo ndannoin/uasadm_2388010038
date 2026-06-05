@@ -61,4 +61,5 @@ jobs:
 
             # Pull image terbaru dan deploy statis saja
             docker compose pull uas-statis
-            docker compose up -d --no-deps uas-statis
+            docker rm -f uas-statis 2>/dev/null || true
+            docker compose up -d --no-deps --force-recreate uas-statis

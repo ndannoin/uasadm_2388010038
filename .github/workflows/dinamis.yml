@@ -61,4 +61,5 @@ jobs:
 
             # Pull image terbaru dan deploy dinamis + MariaDB (dependency)
             docker compose pull uas-dinamis
-            docker compose up -d uas-dinamis
+            docker rm -f uas-dinamis 2>/dev/null || true
+            docker compose up -d --force-recreate uas-dinamis
