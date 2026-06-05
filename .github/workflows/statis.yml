@@ -37,5 +37,5 @@ jobs:
           key: ${{ secrets.AWS_PRIVATE_KEY }}
           script: |
             cd /home/ubuntu/uas-2388010038
-            docker compose pull web-statis
-            docker compose up -d --no-deps web-statis
+            docker compose pull uas-statis
+            docker compose up -d --no-deps uas-statis

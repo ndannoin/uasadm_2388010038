@@ -35,7 +35,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
-      - ./web-dinamis/database.sql:/docker-entrypoint-initdb.d/database.sql:ro
+      - ./database/users.sql:/docker-entrypoint-initdb.d/database.sql:ro
     healthcheck:
       test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "${DB_USER}", "-p${DB_PASSWORD}"]
       interval: 5s
