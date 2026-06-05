@@ -332,7 +332,7 @@ $result = $conn->query("SELECT id, judul, kategori, tanggal_dibuat FROM berita O
     <main class="dashboard">
         <section class="topbar">
             <div>
-                <span class="brand">UAS Cloud Computing 2388010038</span>
+                <span class="brand">UAS Cloud Computing 2388010090</span>
                 <h1>Dashboard CRUD Berita</h1>
                 <p class="user">Login sebagai @<?php echo htmlspecialchars($_SESSION["username"], ENT_QUOTES, "UTF-8"); ?></p>
             </div>
