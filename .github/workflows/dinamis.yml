@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-
     paths:
       - 'web-dinamis/**'
 
@@ -36,10 +35,7 @@ jobs:
           host: ${{ secrets.AWS_HOST }}
           username: ${{ secrets.AWS_USERNAME }}
           key: ${{ secrets.AWS_PRIVATE_KEY }}
-
           script: |
-            cd /home/ec2-user/uasadm_2388010038
-
-            docker compose pull
-
-            docker compose up -d
+            cd /home/ubuntu/uas-2388010038
+            docker compose pull web-dinamis
+            docker compose up -d --no-deps web-dinamis

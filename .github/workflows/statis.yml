@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-
     paths:
       - 'web-statis/**'
 
@@ -36,14 +35,7 @@ jobs:
           host: ${{ secrets.AWS_HOST }}
           username: ${{ secrets.AWS_USERNAME }}
           key: ${{ secrets.AWS_PRIVATE_KEY }}
-
           script: |
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/uas-statis:latest
-
-            docker stop uas-statis || true
-            docker rm uas-statis || true
-
-            docker run -d \
-              --name uas-statis \
-              -p 80:80 \
-              ${{ secrets.DOCKERHUB_USERNAME }}/uas-statis:latest
+            cd /home/ubuntu/uas-2388010038
+            docker compose pull web-statis
+            docker compose up -d --no-deps web-statis
