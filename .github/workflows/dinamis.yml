@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'web-dinamis/**' # Sesuai dengan nama folder asli di VS Code kamu
+      - 'web-dinamis/**' # Benar, membaca nama folder fisik di VS Code kamu
 
 jobs:
   deploy:
@@ -23,7 +23,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          # Membangun image langsung dari folder web-dinamis kamu
+          # Membangun image dari folder fisik web-dinamis
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/uas-dinamis:latest ./web-dinamis
 
       - name: Push Docker Image
@@ -41,13 +41,13 @@ jobs:
             # 1. Tarik perubahan folder terbaru dari GitHub ke server AWS
             git pull origin main
             
-            # 2. Tarik image terbaru dari Docker Hub ke dalam sistem runtime
+            # 2. Tarik image terbaru dari Docker Hub ke dalam runtime
             docker compose pull web-dinamis
             docker compose up -d --no-deps web-dinamis
             
-            # 3. Otomatisasi Sinkronisasi File ke dalam container runtime Apache
+            # 3. Sinkronisasi otomatis file baru ke dalam jantung kontainer uas-dinamis
             docker cp /home/ubuntu/uas-2388010038/web-dinamis/index.php uas-dinamis:/var/www/html/index.php
             docker cp /home/ubuntu/uas-2388010038/web-dinamis/dashboard.php uas-dinamis:/var/www/html/dashboard.php
             
-            # 4. Refresh Container
+            # 4. Refresh kontainer uas-dinamis
             docker restart uas-dinamis
