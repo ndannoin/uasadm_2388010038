@@ -1,8 +1,8 @@
 <?php
-$host = "uas-mariadb"; // Menggunakan DNS internal docker
-$user = "zaidan_user";
-$pass = "password_zaidan_123";
-$db   = "uas_zaidan_db";
+$host = getenv("DATABASE_HOST") ?: "uas-mariadb"; // Menggunakan DNS internal docker
+$user = getenv("MYSQL_USER") ?: "zaidan_user";
+$pass = getenv("MYSQL_PASSWORD") ?: "password_zaidan_123";
+$db   = getenv("MYSQL_DATABASE") ?: "uas_zaidan_db";
 
 $conn = new mysqli($host, $user, $pass, $db);
 
