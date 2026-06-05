@@ -1,3 +1,4 @@
+cat << 'EOF' > /home/ubuntu/uas-2388010038/web-dinamis/index.php
 <?php
 session_start();
 include "koneksi.php";
@@ -38,11 +39,7 @@ if(isset($_POST['login'])){
             --border: rgba(124, 106, 247, 0.2);
         }
 
-        *, *::before, *::after { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'DM Sans', sans-serif;
@@ -52,15 +49,13 @@ if(isset($_POST['login'])){
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            position: relative;
+            margin: 0;
         }
 
         .login-container {
-            position: relative;
             width: 100%;
             max-width: 400px;
             padding: 20px;
-            z-index: 1;
         }
 
         .login-card {
@@ -97,13 +92,10 @@ if(isset($_POST['login'])){
             font-weight: 800;
             text-align: center;
             margin-bottom: 30px;
-            letter-spacing: -0.02em;
             color: #ffffff;
         }
 
-        .form-group {
-            margin-bottom: 22px;
-        }
+        .form-group { margin-bottom: 22px; }
 
         label {
             font-family: 'Space Mono', monospace;
@@ -124,6 +116,7 @@ if(isset($_POST['login'])){
             color: #fff;
             font-size: 15px;
             transition: all 0.2s ease;
+            box-sizing: border-box;
         }
 
         input:focus {
@@ -151,7 +144,6 @@ if(isset($_POST['login'])){
         button:hover {
             background: #9580ff;
             transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(124, 106, 247, 0.5);
         }
 
         .error-box {
@@ -195,3 +187,4 @@ if(isset($_POST['login'])){
 
 </body>
 </html>
+EOF
