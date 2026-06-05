@@ -3,7 +3,8 @@ name: Deploy Web Dinamis
 on:
   push:
     branches:
-      - master # SEKARANG SUDAH MENDUKUNG BRANCH MASTER
+      - main
+      - master
     paths:
       - 'web-dinamis/**'
 
