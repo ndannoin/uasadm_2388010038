@@ -3,7 +3,7 @@ name: Deploy Web Dinamis
 on:
   push:
     branches:
-      - master # Memanggil otomatisasi saat kamu push ke branch master
+      - main # Memanggil otomatisasi saat kamu push ke branch main
     paths:
       - 'web-dinamis/**' # Hanya berjalan jika ada perubahan di folder web-dinamis
 
