@@ -1,12 +1,12 @@
 <?php
-$host = "uas-mariadb"; // WAJIB memanggil nama service di docker-compose
-$user = "admin";
-$pass = "admin123";
-$db   = "uasadm_2388010038";
+$host = "uas-mariadb"; // Menggunakan DNS internal docker
+$user = "zaidan_user";
+$pass = "password_zaidan_123";
+$db   = "uas_zaidan_db";
 
 $conn = new mysqli($host, $user, $pass, $db);
 
 if ($conn->connect_error) {
-    die("Koneksi ke MariaDB Gagal: " . $conn->connect_error);
+    die("Koneksi Database Gagal: " . $conn->connect_error);
 }
 ?>
