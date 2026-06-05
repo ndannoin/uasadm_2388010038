@@ -55,6 +55,6 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
 
-            # Pull image terbaru dan deploy (termasuk MariaDB)
+            # Pull image terbaru dan deploy dinamis + MariaDB (dependency)
             docker compose pull uas-dinamis
-            docker compose up -d
+            docker compose up -d uas-dinamis
