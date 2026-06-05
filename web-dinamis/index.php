@@ -290,7 +290,7 @@ if (isset($_POST['simpan_berita'])) {
 <div class="dashboard-container">
     
     <div class="content-card">
-        <span class="brand-logo">UAS — Cloud Computing</span>
+        <span class="brand-logo">UAS — Cloud Computing 2388010038</span>
         <h2><?php echo $is_edit_mode ? "Update News Data" : "Publish News"; ?></h2>
 
         <?php if($message != ""){ ?>
