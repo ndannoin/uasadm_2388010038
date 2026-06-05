@@ -3,15 +3,13 @@ name: Deploy Web Dinamis
 on:
   push:
     branches:
-      - main
-      - master
+      - master # Memanggil otomatisasi saat kamu push ke branch master
     paths:
-      - 'web-dinamis/**'
+      - 'web-dinamis/**' # Hanya berjalan jika ada perubahan di folder web-dinamis
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
@@ -24,11 +22,11 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/web-dinamis:latest ./web-dinamis
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/uas-dinamis:latest ./web-dinamis
 
       - name: Push Docker Image
         run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/web-dinamis:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/uas-dinamis:latest
 
       - name: Deploy to AWS via SSH
         uses: appleboy/ssh-action@master
@@ -37,14 +35,10 @@ jobs:
           username: ${{ secrets.AWS_USERNAME }}
           key: ${{ secrets.AWS_PRIVATE_KEY }}
           script: |
-            cd /home/ubuntu/UASS_2388010038
-            # Otomatis pull sesuai branch yang aktif
-            git pull origin $(git branch --show-current)
-            
+            cd /home/ubuntu/uas-2388010038
+            git pull origin master
             docker compose pull web-dinamis
             docker compose up -d --no-deps web-dinamis
-            
-            docker cp /home/ubuntu/UASS_2388010038/web-dinamis/index.php web-dinamis:/var/www/html/index.php
-            docker cp /home/ubuntu/UASS_2388010038/web-dinamis/dashboard.php web-dinamis:/var/www/html/dashboard.php
-            
-            docker restart web-dinamis
+            docker cp /home/ubuntu/uas-2388010038/web-dinamis/index.php uas-dinamis:/var/www/html/index.php
+            docker cp /home/ubuntu/uas-2388010038/web-dinamis/dashboard.php uas-dinamis:/var/www/html/dashboard.php
+            docker restart uas-dinamis
