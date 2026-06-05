@@ -1,4 +1,3 @@
-cat << 'EOF' > /home/ubuntu/uas-2388010038/web-dinamis/index.php
 <?php
 session_start();
 include "koneksi.php";
@@ -186,5 +185,4 @@ if(isset($_POST['login'])){
 </div>
 
 </body>
-</html>
-EOF
+</html>
