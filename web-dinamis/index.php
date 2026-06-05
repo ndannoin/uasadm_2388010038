@@ -5,29 +5,18 @@ include "koneksi.php";
 $error = "";
 
 if(isset($_POST['login'])){
-
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Catatan Keamanan UAS: Kode ini masih rentan SQL Injection, tapi untuk kebutuhan standarisasi fungsionalitas UAS sudah cukup.
-    $sql = "SELECT * FROM users
-            WHERE username='$username'
-            AND password='$password'";
-
+    $sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
     $result = $conn->query($sql);
 
     if($result->num_rows > 0){
-
         $_SESSION['username'] = $username;
-
-        // AMANKAN INI: Tambahkan /api/ sebelum nama file agar tidak tersesat keluar dari proxy Nginx
-        header("Location: /api/dashboard.php");
+        header("Location: dashboard.php");
         exit();
-
     } else {
-
-        $error = "Username atau Password Salah!";
-
+        $error = "Username atau password salah, silakan cek kembali!";
     }
 }
 ?>
@@ -37,38 +26,182 @@ if(isset($_POST['login'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login UAS</title>
+    <title>Sistem Autentikasi — Cloud UAS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
     <style>
-        /* Sedikit sentuhan CSS minimalis agar tampilan login kamu tidak terlalu polosan saat di-live test dosen */
-        body { font-family: Arial, sans-serif; background: #0a0a0f; color: #f0eeff; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .login-card { background: #14141f; padding: 30px; border-radius: 12px; border: 1px solid rgba(124,106,247,0.2); box-shadow: 0 8px 24px rgba(0,0,0,0.3); width: 300px; }
-        h2 { font-size: 20px; margin-bottom: 20px; text-align: center; color: #7c6af7; }
-        input { width: 100%; padding: 10px; margin-top: 5px; margin-bottom: 15px; border-radius: 6px; border: 1px solid #1c1c2e; background: #10101a; color: #fff; box-sizing: border-box; }
-        button { width: 100%; padding: 10px; background: #7c6af7; border: none; color: white; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; }
-        button:hover { background: #9580ff; }
-        .error-msg { color: #ff6b6b; font-size: 14px; text-align: center; margin-bottom: 10px; }
+        :root {
+            --bg: #0a0a0f;
+            --surface: #14141f;
+            --accent: #7c6af7;
+            --accent-glow: rgba(124, 106, 247, 0.4);
+            --text: #f0eeff;
+            --text-muted: #8b8aa0;
+            --border: rgba(124, 106, 247, 0.2);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background Glow Orb effect */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(124,106,247,0.15) 0%, transparent 70%);
+            top: -100px; right: -100px;
+            pointer-events: none;
+        }
+
+        .login-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            z-index: 1;
+        }
+
+        .login-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px 35px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--accent), #c084fc);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .brand-logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: var(--accent);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+            text-align: center;
+        }
+
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 30px;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #fff 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            background: #10101a;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 15px;
+            transition: all 0.2s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent);
+            border: none;
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 20px rgba(124, 106, 247, 0.3);
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #9580ff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(124, 106, 247, 0.5);
+        }
+
+        .error-box {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
 
-<div class="login-card">
-    <h2>Login UAS Cloud</h2>
+<div class="login-container">
+    <div class="login-card">
+        <span class="brand-logo">UAS — Cloud Computing</span>
+        <h2>Secure Gateway</h2>
 
-    <?php if($error != ""){ ?>
-        <div class="error-msg">
-            <?php echo $error; ?>
-        </div>
-    <?php } ?>
+        <?php if($error != ""){ ?>
+            <div class="error-box"><?php echo $error; ?></div>
+        <?php } ?>
 
-    <form method="POST">
-        <label>Username</label>
-        <input type="text" name="username" required>
+        <form method="POST">
+            <div class="form-group">
+                <label>Identitas / Username</label>
+                <input type="text" name="username" placeholder="Masukkan username" autocomplete="off" required>
+            </div>
 
-        <label>Password</label>
-        <input type="password" name="password" required>
+            <div class="form-group">
+                <label>Kunci Akses / Password</label>
+                <input type="password" name="password" placeholder="••••••••" required>
+            </div>
 
-        <button type="submit" name="login">Login</button>
-    </form>
+            <button type="submit" name="login">AUTHENTICATE</button>
+        </form>
+    </div>
 </div>
 
 </body>
