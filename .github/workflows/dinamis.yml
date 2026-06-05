@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'web-dinamis/**' # Kriteria 1: Paths Filter Terisolasi (Sangat Baik)
+      - 'uas-dinamis/**' # SEKARANG SUDAH AKURAT SESUAI NAMA FOLDER KAMU
 
 jobs:
   deploy:
@@ -23,7 +23,8 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/uas-dinamis:latest ./web-dinamis
+          # Membaca folder uas-dinamis yang ada di laptop/GitHub kamu
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/uas-dinamis:latest ./uas-dinamis
 
       - name: Push Docker Image
         run: |
@@ -37,16 +38,16 @@ jobs:
           key: ${{ secrets.AWS_PRIVATE_KEY }}
           script: |
             cd /home/ubuntu/uas-2388010038
-            # 1. Tarik perubahan kode terbaru dari GitHub ke server AWS
+            # 1. Tarik kode terbaru ke server AWS
             git pull origin main
             
-            # 2. Tarik image terbaru dari Docker Hub
+            # 2. Tarik image baru dan jalankan service web-dinamis
             docker compose pull web-dinamis
             docker compose up -d --no-deps web-dinamis
             
-            # 3. Otomatisasi Sinkronisasi File (Biar kamu gak perlu ngetik di terminal lagi!)
-            docker cp /home/ubuntu/uas-2388010038/web-dinamis/index.php uas-dinamis:/var/www/html/index.php
-            docker cp /home/ubuntu/uas-2388010038/web-dinamis/dashboard.php uas-dinamis:/var/www/html/dashboard.php
+            # 3. Sinkronisasi otomatis dari folder uas-dinamis server ke dalam jantung Docker
+            docker cp /home/ubuntu/uas-2388010038/uas-dinamis/index.php uas-dinamis:/var/www/html/index.php
+            docker cp /home/ubuntu/uas-2388010038/uas-dinamis/dashboard.php uas-dinamis:/var/www/html/dashboard.php
             
             # 4. Segarkan kontainer
             docker restart uas-dinamis
