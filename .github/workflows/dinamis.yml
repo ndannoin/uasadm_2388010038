@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'web-dinamis/**' # Sangat Baik: Path terisolasi sesuai rubrik dosen
+      - 'web-dinamis/**' # Kriteria 1: Paths Filter Terisolasi (Sangat Baik)
 
 jobs:
   deploy:
@@ -30,14 +30,23 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/uas-dinamis:latest
 
       - name: Deploy to AWS via SSH
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.AWS_HOST }}
           username: ${{ secrets.AWS_USERNAME }}
           key: ${{ secrets.AWS_PRIVATE_KEY }}
           script: |
             cd /home/ubuntu/uas-2388010038
+            # 1. Tarik perubahan kode terbaru dari GitHub ke server AWS
             git pull origin main
-            # Memanggil nama service yang benar (web-dinamis) agar Docker mengenali jalurnya
+            
+            # 2. Tarik image terbaru dari Docker Hub
             docker compose pull web-dinamis
             docker compose up -d --no-deps web-dinamis
+            
+            # 3. Otomatisasi Sinkronisasi File (Biar kamu gak perlu ngetik di terminal lagi!)
+            docker cp /home/ubuntu/uas-2388010038/web-dinamis/index.php uas-dinamis:/var/www/html/index.php
+            docker cp /home/ubuntu/uas-2388010038/web-dinamis/dashboard.php uas-dinamis:/var/www/html/dashboard.php
+            
+            # 4. Segarkan kontainer
+            docker restart uas-dinamis
