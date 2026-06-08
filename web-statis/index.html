@@ -48,13 +48,13 @@
     .cursor {
       position: fixed; width: 8px; height: 8px; border-radius: 50%;
       background: var(--accent); pointer-events: none; z-index: 9999;
-      transform: translate(-50%, -50%); transition: transform 0.1s, width 0.3s, height 0.3s;
+      transform: translate(-50%, -50%); transition: transform 0.05s, width 0.3s, height 0.3s;
       mix-blend-mode: screen;
     }
     .cursor-ring {
       position: fixed; width: 32px; height: 32px; border-radius: 50%;
       border: 1px solid var(--accent); pointer-events: none; z-index: 9998;
-      transform: translate(-50%, -50%); transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
+      transform: translate(-50%, -50%); transition: transform 0.12s ease-out, width 0.3s, height 0.3s;
       opacity: 0.5;
     }
 
@@ -94,13 +94,13 @@
     .hero-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
 
     .hero-name {
-      font-family: var(--font-display); font-size: clamp(36px, 5vw, 54px) !important; 
+      font-family: var(--font-display); font-size: clamp(36px, 5vw, 54px); 
       font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 10px;
       opacity: 0; animation: fade-up 0.8s 0.35s forwards;
     }
 
     .hero-nim {
-      display: block; font-family: var(--font-mono) !important; font-size: clamp(18px, 2.5vw, 24px) !important;
+      display: block; font-family: var(--font-mono); font-size: clamp(18px, 2.5vw, 24px);
       font-weight: 700; letter-spacing: 0.05em; margin-top: 5px; margin-bottom: 24px;
       background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--accent3) 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
@@ -116,10 +116,10 @@
     .chip { padding: 5px 14px; border-radius: 40px; border: 1px solid var(--border); font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); background: var(--surface2); }
 
     .hero-cta { display: flex; gap: 14px; opacity: 0; animation: fade-up 0.8s 0.75s forwards; }
-    .btn-primary, .btn-outline { padding: 12px 28px; border-radius: 6px; font-family: var(--font-display); font-weight: 600; font-size: 13px; text-decoration: none; transition: all 0.2s; }
-    .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 0 20px var(--glow); }
+    .btn-primary, .btn-outline { padding: 12px 28px; border-radius: 6px; font-family: var(--font-display); font-weight: 600; font-size: 13px; text-decoration: none; transition: all 0.2s; cursor: pointer; }
+    .btn-primary { background: var(--accent); color: #fff; border: none; box-shadow: 0 0 20px var(--glow); }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 30px var(--glow); background: #9580ff; }
-    .btn-outline { border: 1px solid var(--border); color: var(--text-muted); }
+    .btn-outline { border: 1px solid var(--border); color: var(--text-muted); background: transparent; }
     .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
 
     /* ─── HERO PHOTO AVATAR ─── */
@@ -174,48 +174,75 @@
     .edu-timeline::before { content: ''; position: absolute; left: 0; top: 6px; bottom: 6px; width: 1px; background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent); }
     .edu-item { position: relative; margin-bottom: 36px; }
     .edu-item::before { content: ''; position: absolute; left: -29px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
-    .edu-school { font-size: 18px; color: var(--text); }
+    .edu-year { font-family: var(--font-mono); font-size: 12px; color: var(--accent2); margin-bottom: 4px; }
+    .edu-school { font-size: 18px; font-weight: 700; color: var(--text); }
+    .edu-major { color: var(--text-muted); font-size: 14px; }
 
     /* ORGANIZATIONS */
     #organizations { background: var(--bg2); }
     .org-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
     .org-card { background: var(--surface); border: 1px solid var(--border2); border-radius: 12px; padding: 24px; }
-    .org-name { font-size: 16px; color: var(--text); }
+    .org-name { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .org-desc { color: var(--text-muted); font-size: 14px; font-weight: 300; }
 
     /* SKILLS */
     .skills-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
     .skill-bar-item { margin-bottom: 16px; }
+    .skill-bar-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-family: var(--font-mono); font-size: 13px; }
     .skill-bar-track { height: 4px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
     .skill-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transform-origin: left; transform: scaleX(0); transition: transform 1s cubic-bezier(0.16,1,0.3,1); }
+    
     .cert-grid { display: flex; flex-direction: column; gap: 12px; }
-    .cert-card { display: flex; align-items: center; gap: 14px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--border2); border-radius: 10px; transition: all 0.2s; cursor: pointer;}
+    .cert-card { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--border2); border-radius: 10px; transition: all 0.2s; cursor: pointer;}
+    .cert-card:hover { border-color: rgba(124,106,247,0.3); background: var(--surface2); }
+    .cert-meta { display: flex; align-items: center; gap: 14px; }
     .cert-icon { width: 36px; height: 36px; border-radius: 6px; font-size: 16px; display:flex; align-items:center; justify-content:center; background: rgba(192,132,252,0.1);}
+    .cert-info-name { font-weight: 500; color: var(--text); }
+    .cert-info-issuer { font-size: 12px; color: var(--text-muted); }
+    
+    .cert-upload-btn { 
+      padding: 6px 14px; border-radius: 4px; border: 1px solid var(--border); 
+      background: var(--surface2); color: var(--text); font-family: var(--font-mono); 
+      font-size: 11px; cursor: pointer; transition: all 0.2s;
+    }
+    .cert-upload-btn:hover { background: var(--accent); border-color: var(--accent); }
+    .cert-has-file .cert-upload-btn { border-color: #22c55e; color: #22c55e; }
 
     /* CONTACT */
     #contact { background: var(--bg2); text-align: center; }
-    .contact-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .contact-link { display: flex; align-items: center; gap: 8px; padding: 12px 24px; background: var(--surface); border: 1px solid var(--border2); border-radius: 10px; font-size: 13px; color: var(--text-muted); text-decoration: none; }
+    .contact-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+    .contact-link { display: flex; align-items: center; gap: 8px; padding: 12px 24px; background: var(--surface); border: 1px solid var(--border2); border-radius: 10px; font-size: 13px; color: var(--text-muted); text-decoration: none; transition: all 0.2s; }
     .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
 
     /* MODAL */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(6px); padding: 16px; }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center; backdrop-filter: blur(6px); padding: 16px; }
     .modal-overlay.open { display: flex; }
     .modal-box { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; width: 100%; max-width: 700px; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden; }
     .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border2); }
-    .modal-close { width: 32px; height: 32px; border-radius: 6px; background: none; color: var(--text-muted); border: 1px solid var(--border2); cursor: pointer; }
-    .modal-body { flex: 1; overflow: auto; display: flex; align-items: center; justify-content: center; padding: 20px; min-height: 260px; }
+    .modal-title { font-family: var(--font-display); font-weight: 700; font-size: 16px; }
+    .modal-close { width: 32px; height: 32px; border-radius: 6px; background: none; color: var(--text-muted); border: 1px solid var(--border2); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .modal-close:hover { color: var(--text); border-color: var(--text-muted); }
+    .modal-body { flex: 1; overflow: auto; display: flex; align-items: center; justify-content: center; padding: 20px; min-height: 260px; background: #0c0c14; }
     .modal-body img { max-width: 100%; max-height: 55vh; border-radius: 6px; object-fit: contain; }
     .modal-body iframe { width: 100%; height: 55vh; border: none; border-radius: 6px; }
-    .modal-footer { padding: 12px 20px; border-top: 1px solid var(--border2); display: flex; gap: 10px; align-items: center; }
+    .modal-footer { padding: 12px 20px; border-top: 1px solid var(--border2); display: flex; justify-content: flex-end; gap: 10px; align-items: center; }
+    
+    .modal-delete-btn {
+      padding: 8px 16px; background: #ef4444; color: white; border: none; border-radius: 6px;
+      font-family: var(--font-mono); font-size: 12px; cursor: pointer; transition: background 0.2s;
+    }
+    .modal-delete-btn:hover { background: #dc2626; }
 
     footer { background: var(--bg); border-top: 1px solid var(--border2); padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; }
+    .footer-name { font-family: var(--font-display); font-weight: 700; }
+    .footer-nim { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
     .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.16,1,0.3,1); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
     @media (max-width: 900px) {
       nav { padding: 12px 20px; } .nav-links { display: none; } section { padding: 60px 20px; }
       #hero { padding: 90px 20px 60px; min-height: auto; } .hero-photo-wrap { display: none; }
-      .about-grid, .skills-layout { grid-template-columns: 1fr; gap: 32px; } footer { flex-direction: column; gap: 12px; }
+      .about-grid, .skills-layout { grid-template-columns: 1fr; gap: 32px; } footer { flex-direction: column; gap: 12px; text-align: center; }
     }
   </style>
 </head>
@@ -260,7 +287,6 @@
     </div>
   </div>
 
-  <!-- FIX CONTAINER: Mengunci nama file gambar custom kamu -->
   <div class="hero-photo-wrap">
     <div class="hero-photo-ring">
       <div class="hero-photo-inner">
@@ -326,12 +352,14 @@
     <div class="reveal">
       <div class="cert-grid" id="certGrid">
         <div class="cert-card" data-cert-id="cert1" onclick="openCertModal('cert1')">
-          <div class="cert-icon">🏅</div>
-          <div>
-            <div class="cert-info-name">Cybersecurity Career Starter</div>
-            <div class="cert-info-issuer">Hack & Fix Academy</div>
+          <div class="cert-meta">
+            <div class="cert-icon">🏅</div>
+            <div>
+              <div class="cert-info-name">Cybersecurity Career Starter</div>
+              <div class="cert-info-issuer">Hack & Fix Academy</div>
+            </div>
           </div>
-          <button class="cert-upload-btn" id="btn-cert1" onclick="event.stopPropagation(); triggerUpload('cert1')">Upload</button>
+          <button class="cert-upload-btn" id="btn-cert1" onclick="event.stopPropagation(); handleCertBtnClick('cert1')">Upload</button>
         </div>
       </div>
       <input type="file" id="fileInput" accept="image/*,.pdf" style="display:none" onchange="handleFileUpload(event)">
@@ -342,12 +370,11 @@
 <div class="modal-overlay" id="certModal">
   <div class="modal-box">
     <div class="modal-header">
-      <div><div class="modal-title" id="modalTitle">Nama Sertifikat</div></div>
+      <div class="modal-title" id="modalTitle">Nama Sertifikat</div>
       <button class="modal-close" onclick="closeCertModal()">✕</button>
     </div>
     <div class="modal-body" id="modalBody"></div>
     <div class="modal-footer">
-      <label class="modal-upload-label" id="modalUploadLabel">Upload Sertifikat</label>
       <button class="modal-delete-btn" id="modalDeleteBtn" style="display:none" onclick="deleteCert()">Hapus File</button>
     </div>
   </div>
@@ -379,7 +406,32 @@
   function getCertData(id) { try { return JSON.parse(localStorage.getItem('cert_' + id)); } catch { return null; } }
   function setCertData(id, obj) { try { localStorage.setItem('cert_' + id, JSON.stringify(obj)); } catch(e) { alert('Storage penuh!'); } }
   function deleteCertData(id) { localStorage.removeItem('cert_' + id); }
-  function refreshCertButtons() { document.querySelectorAll('.cert-card[data-cert-id]').forEach(card => { const id = card.dataset.certId; const data = getCertData(id); const btn = document.getElementById('btn-' + id); if (!btn) return; if (data) { btn.textContent = '✓ Lihat'; card.classList.add('cert-has-file'); } else { btn.textContent = 'Upload'; card.classList.remove('cert-has-file'); } }); }
+  
+  function refreshCertButtons() { 
+    document.querySelectorAll('.cert-card[data-cert-id]').forEach(card => { 
+      const id = card.dataset.certId; 
+      const data = getCertData(id); 
+      const btn = document.getElementById('btn-' + id); 
+      if (!btn) return; 
+      if (data) { 
+        btn.textContent = 'Lihat'; 
+        card.classList.add('cert-has-file'); 
+      } else { 
+        btn.textContent = 'Upload'; 
+        card.classList.remove('cert-has-file'); 
+      } 
+    }); 
+  }
+
+  function handleCertBtnClick(id) {
+    const data = getCertData(id);
+    if (data) {
+      openCertModal(id);
+    } else {
+      triggerUpload(id);
+    }
+  }
+
   function triggerUpload(id) { currentCertId = id; document.getElementById('fileInput').value = ''; document.getElementById('fileInput').click(); }
 
   function handleFileUpload(e) {
@@ -406,9 +458,9 @@
   }
 
   function openCertModal(id) { currentCertId = id; const card = document.querySelector(`.cert-card[data-cert-id="${id}"]`); document.getElementById('modalTitle').textContent = card ? card.querySelector('.cert-info-name').textContent : '—'; renderModalBody(id); document.getElementById('certModal').classList.add('open'); }
-  function renderModalBody(id) { const body = document.getElementById('modalBody'); const deleteBtn = document.getElementById('modalDeleteBtn'); const data = getCertData(id); if (!data) { body.innerHTML = `<div>Belum ada sertifikat.</div>`; deleteBtn.style.display = 'none'; return; } deleteBtn.style.display = 'inline-flex'; body.innerHTML = data.type === 'application/pdf' ? `<iframe src="${data.data}"></iframe>` : `<img src="${data.data}" alt="Sertifikat" />`; }
+  function renderModalBody(id) { const body = document.getElementById('modalBody'); const deleteBtn = document.getElementById('modalDeleteBtn'); const data = getCertData(id); if (!data) { body.innerHTML = `<div style="color: var(--text-muted)">Belum ada file sertifikat yang di-upload.</div>`; deleteBtn.style.display = 'none'; return; } deleteBtn.style.display = 'inline-flex'; body.innerHTML = data.type === 'application/pdf' ? `<iframe src="${data.data}"></iframe>` : `<img src="${data.data}" alt="Sertifikat" />`; }
   function closeCertModal() { document.getElementById('certModal').classList.remove('open'); currentCertId = null; }
-  function deleteCert() { if (!currentCertId || !confirm('Hapus?')) return; deleteCertData(currentCertId); refreshCertButtons(); renderModalBody(currentCertId); }
+  function deleteCert() { if (!currentCertId || !confirm('Apakah Anda yakin ingin menghapus sertifikat ini?')) return; deleteCertData(currentCertId); refreshCertButtons(); renderModalBody(currentCertId); closeCertModal(); }
   document.getElementById('certModal').addEventListener('click', function(e) { if (e.target === this) closeCertModal(); });
   refreshCertButtons();
 </script>
