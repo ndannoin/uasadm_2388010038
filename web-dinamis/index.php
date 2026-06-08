@@ -172,7 +172,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <label for="password">Password</label>
             <input id="password" name="password" type="password" autocomplete="current-password" required>
 
-            <button type="submit">Masuk Dashboard</button>
+            <button type="submit">Masuk 
+                board</button>
         </form>
 
         <p class="hint">Akun default: admin / admin 123</p>

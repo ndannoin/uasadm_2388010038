@@ -371,7 +371,7 @@ $result = $conn->query("SELECT id, judul, kategori, tanggal_dibuat FROM berita O
                     <textarea id="isi_berita" name="isi_berita" required><?php echo htmlspecialchars($isiEdit, ENT_QUOTES, "UTF-8"); ?></textarea>
 
                     <div class="button-row">
-                        <button type="submit" name="simpan_berita"><?php echo $isEditMode ? "Update Data" : "Simpan Data"; ?></button>
+                        <button type="submit" name="simpan_berita"><?php echo $isEditMode ? "Update Data" : "save"; ?></button>
                         <?php if ($isEditMode) { ?>
                             <a class="cancel" href="dashboard.php">Batal</a>
                         <?php } ?>
